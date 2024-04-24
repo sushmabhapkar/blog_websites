@@ -51,6 +51,19 @@ export default function Blog_Form() {
     setBlogDescription('');
   };
 
+  const handleUpdateBlog = (e) => {
+    e.preventDefault();
+    // Handle updating the blog
+    console.log('Updated Blog:', { imageURL, title, blogDescription });
+    // Reset the form and hide the new form
+    setImageURL('');
+    setTitle('');
+    setBlogDescription('');
+    setShowNewForm(false);
+    setEditMode(false);
+    setSubmitted(false);
+  };
+
   return (
     <div>
       {!showNewForm && (
@@ -101,14 +114,23 @@ export default function Blog_Form() {
               <div>
                 <strong>Description:</strong> {blogDescription}
               </div>
+              {/* Display image if imageURL is not empty */}
+              {imageURL && (
+                <div>
+                  <img
+                    src={imageURL}
+                    alt="Blog"
+                    style={{ width: '300px', height: '200px' }} // Adjust width and height as needed
+                  />
+                </div>
+              )}
               <button type='button' onClick={handleEditBlog}>Edit Blog</button>
               <button type='button' onClick={handleDeleteBlog}>Delete Blog</button>
-              
             </>
           )}
 
           {editMode && (
-            <form className="blog-form" onSubmit={handlePostBlog}>
+            <form className="blog-form" onSubmit={handleUpdateBlog}>
               <label>Image URL</label>
               <input
                 type='url'
@@ -136,9 +158,9 @@ export default function Blog_Form() {
                 required
               />
 
-              <button type='submit'>Edit Blog</button>
+              <button type='submit'>Update Blog</button>
               <button type='button' onClick={handleDeleteBlog}>Delete Blog</button>
-             
+              <button type='button' onClick={handleCancel}>Cancel</button>
             </form>
           )}
         </div>
